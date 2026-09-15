@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
 from safe_url import fetch_public_https
+from rpc_auth import rpc_connection_url
 
 
 class SecurityToolTests(unittest.TestCase):
@@ -29,6 +30,13 @@ class SecurityToolTests(unittest.TestCase):
                 and node.func.attr == "system"
             ]
             self.assertEqual([], sinks, name)
+
+    def test_rpc_credentials_are_uri_encoded(self):
+        url = rpc_connection_url("user@example", "p@ss:word/with?reserved", 8766)
+        self.assertEqual(
+            "http://user%40example:p%40ss%3Aword%2Fwith%3Freserved@127.0.0.1:8766",
+            url,
+        )
 
 
 if __name__ == "__main__":

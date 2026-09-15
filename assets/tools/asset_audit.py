@@ -18,6 +18,7 @@ import os
 import subprocess
 import json
 import logging
+from rpc_auth import rpc_connection_url
 
 
 #Set this to your raven-cli program
@@ -67,7 +68,7 @@ def get_rpc_connection():
     if not rpc_user or not rpc_pass:
         raise RuntimeError("Set RAVEN_RPC_USER and RAVEN_RPC_PASSWORD before running this tool")
     from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-    connection = "http://%s:%s@127.0.0.1:%s"%(rpc_user, rpc_pass, rpc_port)
+    connection = rpc_connection_url(rpc_user, rpc_pass, rpc_port)
     #print("Connection: " + connection)
     rpc_connection = AuthServiceProxy(connection)
     return(rpc_connection)
