@@ -50,7 +50,6 @@ public:
     AssetFilterProxy *assetFilterProxy;
     QCompleter* completer;
 
-public Q_SLOTS:
     void clear();
 
 private:
